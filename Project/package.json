@@ -1,0 +1,19 @@
+{
+  "name": "mainproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./consoleVersionQuiz/index.html",
+  "scripts": {
+    "build:js": "npx babel ./consoleVersionQuiz/src/consoleVersionQuiz.js --out-file ./consoleVersionQuiz/src/consoleVersionQuiz-compiled.js",
+    "dev:js": "npx babel ./consoleVersionQuiz/src/consoleVersionQuiz.js --watch --out-file ./consoleVersionQuiz/src/consoleVersionQuiz-compiled.js",
+    "build:css": "sass ./quiz-public/assets/quiz-style.scss ./quiz-public/assets/quiz-style.css",
+    "dev:css": "sass -–watch ./quiz-public/assets/quiz-style.scss:./quiz-public/assets/quiz-style.css"
+  },
+  "author": "LapinaTK",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/preset-env": "^7.7.1"
+  }
+}

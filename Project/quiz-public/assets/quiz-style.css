@@ -1,0 +1,128 @@
+@charset "UTF-8";
+/*Стоит зарефакторить с исправлениями, которые обсуждали в офисе за макбуком*/
+/*flex и grid трогать не буду, остальное постаралась исправить*/
+.btn-further, .time, :root {
+  font-size: 18px;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.body-grid-container {
+  display: grid;
+  grid-template-rows: [body-row1] 50px [body-row2] 1fr [body-row3];
+  grid-template-columns: 1fr;
+  grid-gap: 0;
+  height: 100vh;
+}
+
+header {
+  background-color: #65909f;
+  position: fixed;
+  top: 0;
+  height: 50px;
+  width: 100%;
+  grid-row: body-row1/body-row2;
+  color: #ffffff;
+}
+
+main {
+  grid-row: body-row2/body-row3;
+  height: 100%;
+  width: 100%;
+}
+
+.main-grid-container {
+  background-color: #afc4d0;
+  display: grid;
+  grid-template-rows: [main-row1] minmax(50px) [main-row2] 1fr [main-row3] minmax(50px) [main-row4];
+  grid-template-columns: [main-column1] 1fr [main-column2] 5fr [main-column3] 1fr [main-column4];
+  grid-gap: 0px;
+}
+
+.flex-header-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: end;
+}
+
+.flex-header-container a {
+  width: 200px;
+  margin-right: 5vw;
+}
+
+.flex-quiz-container {
+  grid-column: main-column2/main-column3;
+  grid-row: main-row2/main-row3;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (max-width: 800px) {
+  .flex-quiz-container {
+    padding-left: 20px;
+    padding-right: 20px;
+    grid-column: main-column1/main-column4;
+  }
+}
+.flex-quiz-container-item {
+  margin: 5px;
+}
+
+.flex-label-container {
+  display: flex;
+  background-color: #dfe4e7;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 10px;
+  align-items: center;
+}
+
+.flex-label-container p {
+  margin-left: 15px;
+}
+
+.flex-button-container {
+  display: flex;
+  margin-top: 0;
+  justify-content: space-between;
+}
+
+fieldset {
+  border: 0 none;
+}
+
+fieldset legend {
+  margin-bottom: 10px;
+  text-align: justify;
+  font-weight: bold;
+}
+
+.topic p {
+  font-size: 1.8rem;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.question-number p {
+  font-size: 1.2rem;
+  text-align: justify;
+  margin-bottom: 15px;
+}
+
+.time {
+  width: 50px;
+  text-align: end;
+  background-color: #afc4d0;
+  border: none;
+}
+
+.btn-further {
+  color: #ffffff;
+  background-color: #65909f;
+  padding: 8px;
+  border: none;
+}
+
+/*# sourceMappingURL=quiz-style.css.map */

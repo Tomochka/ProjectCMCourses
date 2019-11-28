@@ -1,0 +1,228 @@
+// tags является массивом, по одному вопросу может быть много тегов
+// ИСПРАВЛЕНО!
+// в answers должна быть структура title / value,
+// а вместо point должно быть correct_answer с указанием name или массива name[] на уровне одного вопроса
+// твоя структура не является ошибкой, но она будет избыточнее с повторениями point
+//ИСПРАВЛЕНО!
+[
+    {
+        "id": 1,
+        "content": "Тэги разметки заключаются между знаками…",
+        "tags": [
+            "html",
+            "Smth"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "/…/", //1
+                "<...>", //2
+                "|…|", //3
+                "#…#" //4
+            ],
+            "correct_answers": [
+                2
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 2,
+        "content": "Для чего используется язык HTML?",
+        "tags": [
+            "Smth",
+            "html"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "для создания текстового документа",
+                "для создания программ",
+                "для создания Web-страниц",
+                "для работы в Internet"
+            ],
+            "correct_answers": [
+                3
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 3,
+        "content": "Тело документа заключается в тэге…",
+        "tags": [
+            "Smth",
+            "html"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<body></body>",
+                "<html></html>",
+                "<head></head>",
+                "<font></font>"
+            ],
+            "correct_answers": [
+                1
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 4,
+        "content": "Для перехода текста на новую строку используется тэг…",
+        "tags": [
+            "html",
+            "Smth"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<html>",
+                "<br>",
+                "<font>",
+                "<body>"
+            ],
+            "correct_answers": [
+                2
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 5,
+        "content": "Какое расширение имеют Web-страницы?",
+        "tags": [
+            "html",
+            "Smth"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                ".txt",
+                ".html",
+                ".doc",
+                ".exe"
+            ],
+            "correct_answers": [
+                2
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 6,
+        "content": "Из какого количества шестнадцатеричных символов кодируется цвет в HTML?",
+        "tags": [
+            "Smth",
+            "html"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "двух",
+                "восьми",
+                "шестнадцати",
+                "шести"
+            ],
+            "correct_answers": [
+                4
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 7,
+        "content": "Какой из тэгов является непарным?",
+        "tags": [
+            "Smth",
+            "html"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<head>",
+                "<br>",
+                "<title>",
+                "<html>"
+            ],
+            "correct_answers": [
+                2
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 8,
+        "content": "Какой тег позволяет вставлять картинки в HTML документы?",
+        "tags": [
+            "Smth",
+            "html"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<pic>",
+                "<image>",
+                "<img>",
+                "<picture>"
+            ],
+            "correct_answers": [
+                3
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 9,
+        "content": "С помощью какого тэга можно сделать текст жирным?",
+        "tags": [
+            "html",
+            "Smth"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<b>",
+                "<i>",
+                "<big>",
+                "<h2>"
+            ],
+            "correct_answers": [
+                1
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    },
+    {
+        "id": 10,
+        "content": "Укажите тег позволяющий подключить к HTML документу скрипты выполняющиеся на стороне клиента.",
+        "tags": [
+            "html",
+            "Smth"
+        ],
+        "type_answer": "radioButton",
+        "answers": {
+            "value": [
+                "<client>",
+                "<script>",
+                "<object>",
+                "<applet>"
+            ],
+            "correct_answers": [
+                2
+            ]
+        },
+        "createdAt": "2019-10-24T19:46:00Z",
+        "imageUrl": "https://dummyimage.com/200x150/555/fff"
+    }
+]
