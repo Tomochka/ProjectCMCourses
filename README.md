@@ -1,1 +1,1 @@
-# ProjectCMCourses
+Сonsole version of the quiz
