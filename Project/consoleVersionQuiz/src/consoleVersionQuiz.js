@@ -202,40 +202,29 @@ var db = [
 
 ]
 
-// это условие отдельной функцией, впрочем, это не должно быть здесь, в тестах мы тестим основной код,
-// а не какие-то спец условия, которые срабатывают только в тестах
-// такая практика имеет быть и связана с мок-тестами, сейчас не тот случай
-// УДАЛЕНО For test (start)
-
 function preparedDB(items) {
     return JSON.parse(JSON.stringify(items));
 }
 
-// стоит придумать более понятное имя, может пару слов скомбинировать
-// ИСПРАВЛЕНО!
 function isCorrectAnswer(answer, current, questions) {
     return answer >= 1 && answer <= questions[current].answers.value.length;
 }
 
-// идея правильная для проверки, но структура не корректная, я описал причину в json
-// ИСПРАВЛЕНО!
 function responseСheck(answer, current, questions) {
-    return answer == questions[current].answers.correct_answers[0];
+    return answer == questions[current].answers.correct_answers[0] ? 1 : 0;
 }
 
-// isTimerEnabled логичнее звучит
-// ИСПРАВЛЕНО!
 function isTimerEnabled(endDate) {
     return new Date() <= endDate;
 }
 
 function endQuiz(current, numberOfQuestions) {
-    return current < numberOfQuestions ? false : true;
+    return current == numberOfQuestions ? true : false;
 }
 
-function formationAnswers(current, questions) {
+function formationQuestionAndAnswers(current, questions) {
 
-    var str = '';
+    var str = `Вопрос ${questions[current].id}/${questions.length}: ${questions[current].content}\n`;;
 
     for (var i = 0; i < questions[current].answers.value.length; i++) {
         str += `${i + 1}) ${questions[current].answers.value[i]}\n`;
@@ -244,56 +233,40 @@ function formationAnswers(current, questions) {
     return str;
 }
 
-function formationQuestion(current, questions) {
-    return `Вопрос ${questions[current].id}/${questions.length}: ${questions[current].content}\n`;
-}
+var questions = preparedDB(db);
+var current = 0;
+var points = 0;
+var startDate = new Date();
+var timeForTestInMs = 20000;
+var endDate = startDate.getTime() + timeForTestInMs;
 
-// реализация правильная, но вместо комментария стоит лучше выносить все в отдельные функции, которые легко тестить
-// ИСПРАВЛЕНО!
-function checkСorrectnessAanswerAndPoints(selectedAnswer, current, questions, question, answers) {
+const rl = require('readline').createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: 'Ваш ответ: '
+});
 
-    do {
-        if (isCorrectAnswer(selectedAnswer, current, questions)) {
-            if (responseСheck(selectedAnswer, current, questions)) {
-                return 1;
-            }
-            else return 0;
-        }
-        else {
-            selectedAnswer = prompt(`Введите корректный ответ.\n` + question + answers, '');
-        }
+console.info(formationQuestionAndAnswers(current, questions));
+rl.prompt();
 
-    } while (true)
-}
+rl.on('line', (selectedAnswer) => {
 
-// здесь не тот случай когда стоит делать функции в функциях, эту задачу на себя возьмут модули, когда столкнемся,
-// лучше отдельные функции, которые легко тестятся по отдельности
-// ИСПРАВЛЕНО!
-function quiz(items) {
-    // стоит вынести отдельной функцией preparedDB()
-    // ИСПРАВЛЕНО!
-    var questions = preparedDB(items);
-    var current = 0;
-    var points = 0;
-    var startDate = new Date();
-    var timeForTestInMs = 20000;
-    var endDate = startDate.getTime() + timeForTestInMs;
-    
-    // первое условие стоит выделить в переменную, зачем намеренно усложнять код
-    // решается отдельной функцией, код станет проще
-    // ИСПРАВЛЕНО!
-    while (!endQuiz(current, questions.length) && isTimerEnabled(endDate)) {
-
-        var answers = formationAnswers(current, questions);
-        var question = formationQuestion(current, questions);
-        var selectedAnswer = prompt(question + answers, '');
-
-        points += checkСorrectnessAanswerAndPoints(selectedAnswer, current, questions, question, answers);
+    if (isCorrectAnswer(selectedAnswer, current, questions)) {
+        points += responseСheck(selectedAnswer, current, questions);
         current++;
     }
+    else {
+        console.info(`Ваш ответ некорректный, ведите корректный ответ.\n`);
+    }
 
-    alert(`Вы набрали ${points} балла(ов) из ${questions.length}`);
-    return true;
-}
+    if (endQuiz(current, questions.length) || !isTimerEnabled(endDate)) {
+        rl.close();
+    }
 
-//quiz(db);
+    console.info(formationQuestionAndAnswers(current, questions));
+    rl.prompt();
+
+}).on('close', () => {
+    console.info(`Вы набрали ${points} балла(ов) из ${questions.length}`);
+    process.exit(0);
+});

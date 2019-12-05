@@ -7,9 +7,9 @@ var db = [{
   "type_answer": "radioButton",
   "answers": {
     "value": ["/…/", //1
-    "<...>", //2
-    "|…|", //3
-    "#…#" //4
+      "<...>", //2
+      "|…|", //3
+      "#…#" //4
     ],
     "correct_answers": [2]
   },
@@ -114,39 +114,31 @@ var db = [{
   },
   "createdAt": "2019-10-24T19:46:00Z",
   "imageUrl": "https://dummyimage.com/200x150/555/fff"
-}]; // это условие отдельной функцией, впрочем, это не должно быть здесь, в тестах мы тестим основной код,
-// а не какие-то спец условия, которые срабатывают только в тестах
-// такая практика имеет быть и связана с мок-тестами, сейчас не тот случай
-// УДАЛЕНО For test (start)
+}];
 
 function preparedDB(items) {
   return JSON.parse(JSON.stringify(items));
-} // стоит придумать более понятное имя, может пару слов скомбинировать
-// ИСПРАВЛЕНО!
-
+}
 
 function isCorrectAnswer(answer, current, questions) {
   return answer >= 1 && answer <= questions[current].answers.value.length;
-} // идея правильная для проверки, но структура не корректная, я описал причину в json
-// ИСПРАВЛЕНО!
-
+}
 
 function responseСheck(answer, current, questions) {
-  return answer == questions[current].answers.correct_answers[0];
-} // isTimerEnabled логичнее звучит
-// ИСПРАВЛЕНО!
-
+  return answer == questions[current].answers.correct_answers[0] ? 1 : 0;
+}
 
 function isTimerEnabled(endDate) {
   return new Date() <= endDate;
 }
 
 function endQuiz(current, numberOfQuestions) {
-  return current < numberOfQuestions ? false : true;
+  return current == numberOfQuestions ? true : false;
 }
 
-function formationAnswers(current, questions) {
-  var str = '';
+function formationQuestionAndAnswers(current, questions) {
+  var str = "\u0412\u043E\u043F\u0440\u043E\u0441 ".concat(questions[current].id, "/").concat(questions.length, ": ").concat(questions[current].content, "\n");
+  ;
 
   for (var i = 0; i < questions[current].answers.value.length; i++) {
     str += "".concat(i + 1, ") ").concat(questions[current].answers.value[i], "\n");
@@ -155,48 +147,36 @@ function formationAnswers(current, questions) {
   return str;
 }
 
-function formationQuestion(current, questions) {
-  return "\u0412\u043E\u043F\u0440\u043E\u0441 ".concat(questions[current].id, "/").concat(questions.length, ": ").concat(questions[current].content, "\n");
-} // реализация правильная, но вместо комментария стоит лучше выносить все в отдельные функции, которые легко тестить
-// ИСПРАВЛЕНО!
+var questions = preparedDB(db);
+var current = 0;
+var points = 0;
+var startDate = new Date();
+var timeForTestInMs = 20000;
+var endDate = startDate.getTime() + timeForTestInMs;
 
+var rl = require('readline').createInterface({
+  input: process.stdin,
+  output: process.stdout,
+  prompt: 'Ваш ответ: '
+});
 
-function checkСorrectnessAanswerAndPoints(selectedAnswer, current, questions, question, answers) {
-  do {
-    if (isCorrectAnswer(selectedAnswer, current, questions)) {
-      if (responseСheck(selectedAnswer, current, questions)) {
-        return 1;
-      } else return 0;
-    } else {
-      selectedAnswer = prompt("\u0412\u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u043E\u0442\u0432\u0435\u0442.\n" + question + answers, '');
-    }
-  } while (true);
-} // здесь не тот случай когда стоит делать функции в функциях, эту задачу на себя возьмут модули, когда столкнемся,
-// лучше отдельные функции, которые легко тестятся по отдельности
-// ИСПРАВЛЕНО!
-
-
-function quiz(items) {
-  // стоит вынести отдельной функцией preparedDB()
-  // ИСПРАВЛЕНО!
-  var questions = preparedDB(items);
-  var current = 0;
-  var points = 0;
-  var startDate = new Date();
-  var timeForTestInMs = 20000;
-  var endDate = startDate.getTime() + timeForTestInMs;
-  var jjjjjjjjjjjjjjjj = 0; // первое условие стоит выделить в переменную, зачем намеренно усложнять код
-  // решается отдельной функцией, код станет проще
-  // ИСПРАВЛЕНО!
-
-  while (!endQuiz(current, questions.length) && isTimerEnabled(endDate)) {
-    var answers = formationAnswers(current, questions);
-    var question = formationQuestion(current, questions);
-    var selectedAnswer = prompt(question + answers, '');
-    points += checkСorrectnessAanswerAndPoints(selectedAnswer, current, questions, question, answers);
+console.info(formationQuestionAndAnswers(current, questions));
+rl.prompt();
+rl.on('line', function (selectedAnswer) {
+  if (isCorrectAnswer(selectedAnswer, current, questions)) {
+    points += responseСheck(selectedAnswer, current, questions);
     current++;
+  } else {
+    console.info("\u0412\u0430\u0448 \u043E\u0442\u0432\u0435\u0442 \u043D\u0435\u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439, \u0432\u0435\u0434\u0438\u0442\u0435 \u043A\u043E\u0440\u0440\u0435\u043A\u0442\u043D\u044B\u0439 \u043E\u0442\u0432\u0435\u0442.\n");
   }
 
-  alert("\u0412\u044B \u043D\u0430\u0431\u0440\u0430\u043B\u0438 ".concat(points, " \u0431\u0430\u043B\u043B\u0430(\u043E\u0432) \u0438\u0437 ").concat(questions.length));
-  return true;
-} //quiz(db);
+  if (endQuiz(current, questions.length) || !isTimerEnabled(endDate)) {
+    rl.close();
+  }
+
+  console.info(formationQuestionAndAnswers(current, questions));
+  rl.prompt();
+}).on('close', function () {
+  console.info("\u0412\u044B \u043D\u0430\u0431\u0440\u0430\u043B\u0438 ".concat(points, " \u0431\u0430\u043B\u043B\u0430(\u043E\u0432) \u0438\u0437 ").concat(questions.length));
+  process.exit(0);
+});

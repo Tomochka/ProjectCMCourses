@@ -92,11 +92,11 @@ describe('consoleVersionQuiz', () => {
 
     describe('responseСheck', () => {
         it("should output true", () => {
-            expect(responseСheck(2, 0, dbForTest)).toBe(true);
+            expect(responseСheck(2, 0, dbForTest)).toBe(1);
         });
 
         it("should output false", () => {
-            expect(responseСheck(3, 0, dbForTest)).toBe(false);
+            expect(responseСheck(3, 0, dbForTest)).toBe(0);
         });
     });
 
@@ -112,7 +112,7 @@ describe('consoleVersionQuiz', () => {
 
     describe('endQuiz', () => {
         it("should output true", () => {
-            expect(endQuiz(5, 4)).toBe(true);
+            expect(endQuiz(4, 4)).toBe(true);
         });
 
         it("should output false", () => {
@@ -120,15 +120,9 @@ describe('consoleVersionQuiz', () => {
         });
     });
 
-    describe('formationAnswers', () => {
-        it("should output 1) 1\n2) 2\n3) 3\n4) 4\n", () => {
-            expect(formationAnswers(3, dbForTest)).toBe(`1) 1\n2) 2\n3) 3\n4) 4\n`);
-        });
-    });
-
-    describe('formationQuestion', () => {
-        it("should output Вопрос 1/4: Тэги разметки заключаются между знаками…\n", () => {
-            expect(formationQuestion(0, dbForTest)).toBe(`Вопрос 1/4: Тэги разметки заключаются между знаками…\n`);
+    describe('formationQuestionAndAnswers', () => {
+        it("should output question+answers", () => {
+            expect(formationQuestionAndAnswers(3, dbForTest)).toBe(`Вопрос 4/4: Для перехода текста на новую строку используется тэг…\n1) 1\n2) 2\n3) 3\n4) 4\n`);
         });
     });
 });
